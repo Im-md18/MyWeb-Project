@@ -520,11 +520,24 @@ nav {
     gap:20px
 }
 .surface {
-    padding:28px;
-    background:#111620c9;
-    border:1px solid var(--line);
-    border-radius:var(--radius)
+    padding: 28px;
+    background: #111620c9;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+
+    
+    transition: transform 0.25s ease,
+                border-color 0.25s ease;
 }
+
+
+@media (hover: hover) and (pointer: fine) {
+    .fact-grid .surface:hover {
+        transform: translateY(-7px);
+        border-color: #53685f;
+    }
+}
+
 .surface h3 {
     margin:20px 0 10px
 }
@@ -1124,4 +1137,5 @@ footer {
     }
 
 }
+
 

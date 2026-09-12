@@ -86,8 +86,8 @@ function initSiteNetwork(canvas) {
 
     const makeNodes = () => {
             const screenArea = width * height;
-            const baseCount = Math.round(screenArea / 14000);
-            const count = Math.max(22, Math.min(60, baseCount));
+            const baseCount = Math.round(screenArea / 100000);
+            const count = 100;
 
         nodes = Array.from({ length: count }, (_, index) => {
             const x = random() * width;
