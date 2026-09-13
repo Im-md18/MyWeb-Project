@@ -183,8 +183,11 @@ nav {
     border:1px solid var(--line);
     border-radius:9px;
     background:var(--panel);
-    padding:8px 12px
+    padding:8px 12px;
+    min-width:46px;
+    min-height:44px
 }
+/* Tre streker */
 .menu-icon {
     position: relative;
     display: block;
@@ -210,9 +213,12 @@ nav {
 .menu-icon span:nth-child(2) {
     top: 8px;
 }
+
 .menu-icon span:nth-child(3) {
     top: 16px;
 }
+
+/* Blir et kryss når menyen er åpen */
 .menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -510,6 +516,32 @@ nav {
     border-radius:5px;
     padding:3px 7px
 }
+/* Covers for projects without a video. Keep the same 16:9 media area. */
+.project-cover {
+    aspect-ratio:16/9;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    border-bottom:1px solid var(--line);
+    background:radial-gradient(ellipse at center,#24382f88,transparent 75%),#0d141a;
+    color:var(--accent);
+    overflow:hidden;
+}
+.cover-type { align-self:flex-start; font-size:9px; letter-spacing:.13em; }
+.cover-symbol { font-size:clamp(26px,3vw,42px); font-weight:600; line-height:1.2; letter-spacing:.07em; }
+.cover-caption { font-size:8px; letter-spacing:.16em; }
+.cover-firefly { color:#e8b86d; background:radial-gradient(ellipse at center,#593d2466,transparent 75%),#15110e; }
+.cover-firefly .cover-symbol { font-family:Georgia,serif; letter-spacing:-.04em; }
+.cover-firefly .cover-symbol span { color:#f5eee3; }
+.cover-stone-paper-scissors { color:#bba8df; background:radial-gradient(ellipse at center,#39305688,transparent 75%),#12101c; }
+.project-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; margin-top:24px; padding-top:18px; border-top:1px solid var(--line); }
+.project-actions .repo-link { margin:0; padding:0; border:0; }
+.project-site-link { font-size:11px; color:var(--accent); }
+.project-site-link:hover { color:var(--text); }
+@media (max-width:700px) { .cover-symbol { font-size:36px; } }
+
 .project-copy {
     padding:24px
 }
@@ -1168,6 +1200,9 @@ footer {
 }
 
 @media(prefers-reduced-motion:reduce) {
+    .fact-grid .surface:hover {
+        transform:none;
+    }
     html {
         scroll-behavior:auto
     }

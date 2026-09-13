@@ -85,9 +85,8 @@ function initSiteNetwork(canvas) {
     let pointerActive = false;
 
     const makeNodes = () => {
-            const screenArea = width * height;
-            const baseCount = Math.round(screenArea / 100000);
-            const count = 100;
+        // More moving points create more connected shapes.
+        const count = 100;
 
         nodes = Array.from({ length: count }, (_, index) => {
             const x = random() * width;
