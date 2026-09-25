@@ -1198,6 +1198,367 @@ footer {
     .certificate-zoom { font-size:8px; right:4px; bottom:4px; padding:2px 4px; }
     .certificates-page .page-hero { padding-top:30px; }
 }
+/* =========================
+   AI PORTFOLIO ASSISTANT
+========================= */
+
+.ai-panel {
+    position: fixed;
+    right: 16px;
+    bottom: 104px;
+
+    width: min(475px, calc(100vw - 32px));
+    height: 625px;
+
+    background: #080d13;
+    border: 1px solid #26313d;
+    border-radius: 24px;
+
+    z-index: 9998;
+
+    display: flex;
+    flex-direction: column;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(20px) scale(0.98);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        visibility 0.3s ease;
+
+    overflow: hidden;
+}
+
+
+/* AI åpnet */
+.ai-panel.open {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0) scale(1);
+}
+
+
+/* HEADER */
+
+.ai-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding: 22px 20px;
+
+    border-bottom: 1px solid #29323d;
+}
+
+
+.ai-header h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+
+.ai-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #b6c0ca;
+}
+
+
+.ai-close {
+    border: none;
+    background: transparent;
+
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: transform 0.25s ease;
+}
+
+
+.ai-close:hover {
+    transform: rotate(90deg);
+}
+
+
+/* CONTENT */
+
+.ai-content {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+}
+
+
+/* Første melding */
+
+.ai-message {
+    padding: 44px 24px;
+
+    text-align: center;
+
+    color: #ffffff;
+
+    border: 1px solid #283440;
+    border-radius: 15px;
+
+    background: #101722;
+
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* QUICK BUTTONS */
+
+.ai-quick-actions {
+    margin-top: auto;
+
+    display: flex;
+    gap: 9px;
+
+    flex-wrap: wrap;
+}
+
+
+.ai-quick-btn {
+    padding: 12px 13px;
+
+    border-radius: 11px;
+    border: 1px solid #293541;
+
+    background: transparent;
+
+    color: #b6d4cc;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.ai-quick-btn:hover {
+    background: #121c24;
+    border-color: #9fc9be;
+
+    transform: translateY(-2px);
+}
+
+
+/* INPUT */
+
+.ai-input-area {
+    margin-top: 15px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #29323d;
+}
+
+
+.ai-input-area label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    color: #aab4be;
+}
+
+
+.ai-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+
+.ai-input-row input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 16px 18px;
+
+    border-radius: 14px;
+
+    border: 2px solid #9fc9be;
+
+    background: #111821;
+
+    color: #ffffff;
+
+    outline: none;
+
+    font-size: 16px;
+}
+
+
+.ai-input-row input::placeholder {
+    color: #6e747c;
+}
+
+
+.ai-send {
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #a9d0c5;
+
+    color: #17221f;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.ai-send:hover {
+    transform: translateY(-2px);
+
+    background: #badbd2;
+}
+
+
+.ai-status {
+    margin: 12px 0 0;
+
+    color: #9ea7b2;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   SPØR MEG BUTTON
+========================= */
+
+.ai-trigger {
+    position: fixed;
+
+    right: 16px;
+    bottom: 20px;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 8px 18px 8px 8px;
+
+    border-radius: 24px;
+
+    border: 1px solid #7eaaa0;
+
+    background: #151e27;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+.ai-trigger:hover {
+    transform: translateY(-3px);
+
+    background: #1a2630;
+}
+
+
+/* Selve ikonet */
+
+.ai-trigger-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 2px;
+
+    border-radius: 16px;
+
+    border: 1px solid #2b3d4c;
+
+    background: #0f1720;
+
+    color: #9fc9be;
+
+    font-size: 24px;
+
+    transition:
+        transform 0.5s cubic-bezier(.34, 1.56, .64, 1),
+        background 0.3s ease;
+}
+
+
+/* ⭐ DETTE ER SELVE ROTASJONEN */
+
+.ai-trigger.active .ai-trigger-icon {
+    transform: rotate(180deg);
+}
+
+
+.ai-spark {
+    color: #d8d4ff;
+
+    font-size: 23px;
+}
+
+
+/* Mobil */
+
+@media (max-width: 600px) {
+
+    .ai-panel {
+        left: 8px;
+        right: 8px;
+        bottom: 92px;
+
+        width: auto;
+        height: min(625px, calc(100vh - 115px));
+    }
+
+
+    .ai-trigger {
+        right: 16px;
+        bottom: 16px;
+    }
+
+
+    .ai-message {
+        padding: 32px 18px;
+    }
+}
 
 @media(prefers-reduced-motion:reduce) {
     .fact-grid .surface:hover {

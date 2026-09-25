@@ -130,5 +130,82 @@
 <div class="media-body">
 </div>
 </dialog>
+<!-- =========================
+     AI PORTFOLIO ASSISTANT
+========================= -->
+
+<!-- AI-vindu -->
+<div class="ai-panel" id="aiPanel">
+    <div class="ai-header">
+        <div>
+            <h2>Porteføljeassistent</h2>
+            <p>Prosjekter, læring og kontakt.</p>
+        </div>
+
+        <button class="ai-close" id="aiClose" aria-label="Lukk AI-assistent">
+            &times;
+        </button>
+    </div>
+
+    <div class="ai-content">
+
+        <div class="ai-message">
+            Hei! Hva vil du vite om Ibrahim og prosjektene hans?
+        </div>
+
+        <div class="ai-quick-actions">
+            <button class="ai-quick-btn" data-question="Vis meg prosjektene">
+                Se prosjekter
+            </button>
+
+            <button class="ai-quick-btn" data-question="Hva lærer Ibrahim?">
+                Hva lærer du?
+            </button>
+
+            <button class="ai-quick-btn" data-question="Hvordan kan jeg kontakte Ibrahim?">
+                Kontakt
+            </button>
+        </div>
+
+        <div class="ai-input-area">
+            <label for="aiInput">Spør om porteføljen</label>
+
+            <div class="ai-input-row">
+                <input
+                    type="text"
+                    id="aiInput"
+                    placeholder="Skriv spørsmålet ditt ..."
+                    autocomplete="off"
+                >
+
+                <button id="aiSend" class="ai-send">
+                    Send
+                </button>
+            </div>
+
+            <p class="ai-status">
+                Forhåndsvisning: AI er ikke koblet til ennå.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Knappen nederst til høyre -->
+<button
+    class="ai-trigger"
+    id="aiTrigger"
+    aria-label="Åpne AI-assistent"
+    aria-expanded="false"
+>
+    <span class="ai-trigger-icon">
+        <span>&lt;</span>
+        <span class="ai-spark">✦</span>
+        <span>&gt;</span>
+    </span>
+
+    <span class="ai-trigger-text">Spør meg</span>
+</button>
 </body>
 </html>

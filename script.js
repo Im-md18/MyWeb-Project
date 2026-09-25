@@ -240,3 +240,107 @@ function initSiteNetwork(canvas) {
 }
 
 initSiteNetwork(networkCanvas);
+
+/* =========================
+   AI PORTFOLIO ASSISTANT
+========================= */
+
+const aiTrigger = document.getElementById("aiTrigger");
+const aiPanel = document.getElementById("aiPanel");
+const aiClose = document.getElementById("aiClose");
+
+const aiInput = document.getElementById("aiInput");
+const aiSend = document.getElementById("aiSend");
+
+const aiQuickButtons = document.querySelectorAll(".ai-quick-btn");
+
+
+/* Åpne / lukke AI */
+
+aiTrigger.addEventListener("click", () => {
+
+    const isOpen = aiPanel.classList.toggle("open");
+
+    aiTrigger.classList.toggle("active", isOpen);
+
+    aiTrigger.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+    );
+
+});
+
+
+/* X-knappen */
+
+aiClose.addEventListener("click", () => {
+
+    aiPanel.classList.remove("open");
+
+    aiTrigger.classList.remove("active");
+
+    aiTrigger.setAttribute("aria-expanded", "false");
+
+});
+
+
+/* Hurtigknappene */
+
+aiQuickButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+        aiInput.value = button.dataset.question;
+
+        aiInput.focus();
+
+    });
+
+});
+
+
+/* Send-knappen */
+
+aiSend.addEventListener("click", () => {
+
+    const question = aiInput.value.trim();
+
+    if (!question) {
+        return;
+    }
+
+    console.log("AI spørsmål:", question);
+
+    /*
+        Senere kobler vi den ekte AI-en her.
+    */
+
+});
+
+
+/* Enter sender spørsmålet */
+
+aiInput.addEventListener("keydown", (event) => {
+
+    if (event.key === "Enter") {
+        aiSend.click();
+    }
+
+});
+
+
+/* ESC lukker AI-vinduet */
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.key === "Escape") {
+
+        aiPanel.classList.remove("open");
+
+        aiTrigger.classList.remove("active");
+
+        aiTrigger.setAttribute("aria-expanded", "false");
+
+    }
+
+});
