@@ -296,6 +296,39 @@ aiClose.addEventListener("click", () => {
 /* =========================
    SEND SPØRSMÅL TIL AI
 ========================= */
+function renderAIAnswer(text) {
+
+    aiMessage.innerHTML = "";
+
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    const parts = text.split(urlRegex);
+
+    parts.forEach((part) => {
+
+        if (part.match(/^https?:\/\//)) {
+
+            const link = document.createElement("a");
+
+            link.href = part;
+            link.textContent = part;
+
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+
+            aiMessage.appendChild(link);
+
+        } else {
+
+            aiMessage.appendChild(
+                document.createTextNode(part)
+            );
+
+        }
+
+    });
+}
+
 
 async function sendQuestion(question) {
 
@@ -346,7 +379,7 @@ async function sendQuestion(question) {
 
         /* Vis AI-svaret */
 
-        aiMessage.textContent = data.answer;
+        renderAIAnswer(data.answer);
 
 
         /* Tøm input */
