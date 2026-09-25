@@ -252,10 +252,13 @@ const aiClose = document.getElementById("aiClose");
 const aiInput = document.getElementById("aiInput");
 const aiSend = document.getElementById("aiSend");
 
+const aiMessage = document.querySelector(".ai-message");
 const aiQuickButtons = document.querySelectorAll(".ai-quick-btn");
 
 
-/* Åpne / lukke AI */
+/* =========================
+   ÅPNE / LUKKE AI
+========================= */
 
 aiTrigger.addEventListener("click", () => {
 
@@ -268,6 +271,11 @@ aiTrigger.addEventListener("click", () => {
         isOpen ? "true" : "false"
     );
 
+    if (isOpen) {
+        setTimeout(() => {
+            aiInput.focus();
+        }, 300);
+    }
 });
 
 
@@ -276,60 +284,156 @@ aiTrigger.addEventListener("click", () => {
 aiClose.addEventListener("click", () => {
 
     aiPanel.classList.remove("open");
-
     aiTrigger.classList.remove("active");
 
-    aiTrigger.setAttribute("aria-expanded", "false");
+    aiTrigger.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+});
+
+
+/* =========================
+   SEND SPØRSMÅL TIL AI
+========================= */
+
+async function sendQuestion(question) {
+
+    question = question.trim();
+
+    if (!question) {
+        return;
+    }
+
+
+    /* Loading */
+
+    aiMessage.textContent = "Tenker...";
+
+    aiSend.disabled = true;
+    aiSend.textContent = "...";
+
+
+    try {
+
+        const response = await fetch(
+            "/.netlify/functions/ai",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    question: question
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error || "Kunne ikke hente svar."
+            );
+
+        }
+
+
+        /* Vis AI-svaret */
+
+        aiMessage.textContent = data.answer;
+
+
+        /* Tøm input */
+
+        aiInput.value = "";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "AI error:",
+            error
+        );
+
+
+        aiMessage.textContent =
+            "Beklager, jeg klarte ikke å svare akkurat nå. Prøv igjen.";
+
+    }
+
+    finally {
+
+        aiSend.disabled = false;
+        aiSend.textContent = "Send";
+
+        aiInput.focus();
+
+    }
+}
+
+
+/* =========================
+   SEND-KNAPP
+========================= */
+
+aiSend.addEventListener("click", () => {
+
+    sendQuestion(
+        aiInput.value
+    );
 
 });
 
 
-/* Hurtigknappene */
+/* =========================
+   ENTER
+========================= */
+
+aiInput.addEventListener("keydown", (event) => {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        sendQuestion(
+            aiInput.value
+        );
+
+    }
+
+});
+
+
+/* =========================
+   HURTIGKNAPPER
+========================= */
 
 aiQuickButtons.forEach((button) => {
 
     button.addEventListener("click", () => {
 
-        aiInput.value = button.dataset.question;
+        const question =
+            button.dataset.question;
 
-        aiInput.focus();
+        aiInput.value = question;
+
+        sendQuestion(question);
 
     });
 
 });
 
 
-/* Send-knappen */
-
-aiSend.addEventListener("click", () => {
-
-    const question = aiInput.value.trim();
-
-    if (!question) {
-        return;
-    }
-
-    console.log("AI spørsmål:", question);
-
-    /*
-        Senere kobler vi den ekte AI-en her.
-    */
-
-});
-
-
-/* Enter sender spørsmålet */
-
-aiInput.addEventListener("keydown", (event) => {
-
-    if (event.key === "Enter") {
-        aiSend.click();
-    }
-
-});
-
-
-/* ESC lukker AI-vinduet */
+/* =========================
+   ESC LUKKER AI
+========================= */
 
 document.addEventListener("keydown", (event) => {
 
@@ -339,7 +443,10 @@ document.addEventListener("keydown", (event) => {
 
         aiTrigger.classList.remove("active");
 
-        aiTrigger.setAttribute("aria-expanded", "false");
+        aiTrigger.setAttribute(
+            "aria-expanded",
+            "false"
+        );
 
     }
 
