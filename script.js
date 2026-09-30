@@ -240,3 +240,247 @@ function initSiteNetwork(canvas) {
 }
 
 initSiteNetwork(networkCanvas);
+
+/* =========================
+   AI PORTFOLIO ASSISTANT
+========================= */
+
+const aiTrigger = document.getElementById("aiTrigger");
+const aiPanel = document.getElementById("aiPanel");
+const aiClose = document.getElementById("aiClose");
+
+const aiInput = document.getElementById("aiInput");
+const aiSend = document.getElementById("aiSend");
+
+const aiMessage = document.querySelector(".ai-message");
+const aiQuickButtons = document.querySelectorAll(".ai-quick-btn");
+
+
+/* =========================
+   ÅPNE / LUKKE AI
+========================= */
+
+aiTrigger.addEventListener("click", () => {
+
+    const isOpen = aiPanel.classList.toggle("open");
+
+    aiTrigger.classList.toggle("active", isOpen);
+
+    aiTrigger.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+    );
+
+    if (isOpen) {
+        setTimeout(() => {
+            aiInput.focus();
+        }, 300);
+    }
+});
+
+
+/* X-knappen */
+
+aiClose.addEventListener("click", () => {
+
+    aiPanel.classList.remove("open");
+    aiTrigger.classList.remove("active");
+
+    aiTrigger.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+});
+
+
+/* =========================
+   SEND SPØRSMÅL TIL AI
+========================= */
+function renderAIAnswer(text) {
+
+    aiMessage.innerHTML = "";
+
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    const parts = text.split(urlRegex);
+
+    parts.forEach((part) => {
+
+        if (part.match(/^https?:\/\//)) {
+
+            const link = document.createElement("a");
+
+            link.href = part;
+            link.textContent = part;
+
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+
+            aiMessage.appendChild(link);
+
+        } else {
+
+            aiMessage.appendChild(
+                document.createTextNode(part)
+            );
+
+        }
+
+    });
+}
+
+
+async function sendQuestion(question) {
+
+    question = question.trim();
+
+    if (!question) {
+        return;
+    }
+
+
+    /* Loading */
+
+    aiMessage.textContent = "Tenker...";
+
+    aiSend.disabled = true;
+    aiSend.textContent = "...";
+
+
+    try {
+
+        const response = await fetch(
+            "/.netlify/functions/ai",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    question: question
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error || "Kunne ikke hente svar."
+            );
+
+        }
+
+
+        /* Vis AI-svaret */
+
+        renderAIAnswer(data.answer);
+
+
+        /* Tøm input */
+
+        aiInput.value = "";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "AI error:",
+            error
+        );
+
+
+        aiMessage.textContent =
+            "Beklager, jeg klarte ikke å svare akkurat nå. Prøv igjen.";
+
+    }
+
+    finally {
+
+        aiSend.disabled = false;
+        aiSend.textContent = "Send";
+
+        aiInput.focus();
+
+    }
+}
+
+
+/* =========================
+   SEND-KNAPP
+========================= */
+
+aiSend.addEventListener("click", () => {
+
+    sendQuestion(
+        aiInput.value
+    );
+
+});
+
+
+/* =========================
+   ENTER
+========================= */
+
+aiInput.addEventListener("keydown", (event) => {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        sendQuestion(
+            aiInput.value
+        );
+
+    }
+
+});
+
+
+/* =========================
+   HURTIGKNAPPER
+========================= */
+
+aiQuickButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+        const question =
+            button.dataset.question;
+
+        aiInput.value = question;
+
+        sendQuestion(question);
+
+    });
+
+});
+
+
+/* =========================
+   ESC LUKKER AI
+========================= */
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.key === "Escape") {
+
+        aiPanel.classList.remove("open");
+
+        aiTrigger.classList.remove("active");
+
+        aiTrigger.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+});
